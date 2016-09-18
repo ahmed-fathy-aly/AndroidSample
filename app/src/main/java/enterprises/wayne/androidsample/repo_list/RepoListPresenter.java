@@ -1,6 +1,7 @@
 package enterprises.wayne.androidsample.repo_list;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import enterprises.wayne.androidsample.data.GitHubAPIService;
@@ -9,6 +10,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by ahmed on 9/17/2016.
@@ -17,10 +19,11 @@ public class RepoListPresenter implements RepoListContract.Presenter
 {
     private RepoListContract.View mView;
     private GitHubAPIService mGitHubAPIService;
+    private Observable mGitHubObservable;
 
     public RepoListPresenter()
     {
-        setGithubService(mGitHubAPIService);
+        setGithubService(new GitHubAPIService());
     }
 
 
@@ -73,7 +76,7 @@ public class RepoListPresenter implements RepoListContract.Presenter
                     public void onNext(List<Repo> repoList)
                     {
                         if (mView != null)
-                            mView.showRepos(repoList);
+                            mView.showRepos(repoList != null ? repoList : new ArrayList<Repo>());
                     }
                 });
     }
