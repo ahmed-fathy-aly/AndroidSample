@@ -20,10 +20,13 @@ import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import enterprises.wayne.androidsample.R;
+import enterprises.wayne.androidsample.app.App;
 import enterprises.wayne.androidsample.entity.Repo;
 import rx.Observable;
 import rx.Observer;
@@ -47,7 +50,7 @@ public class RepoListFragment extends Fragment implements RepoListContract.View
 
     /* fields */
     private RepoAdapter adapterRepos;
-    private RepoListPresenter mPresenter;
+    @Inject public RepoListPresenter mPresenter;
 
     public RepoListFragment()
     {
@@ -73,7 +76,8 @@ public class RepoListFragment extends Fragment implements RepoListContract.View
         recyclerViewRepos.setAdapter(adapterRepos);
 
         // create presenter
-        mPresenter = new RepoListPresenter();
+        App app = (App) getActivity().getApplication();
+        app.getComponent().inject(this);
         mPresenter.subscribe(this);
 
         // add listener for when username is changed and debounce it to decrease requests

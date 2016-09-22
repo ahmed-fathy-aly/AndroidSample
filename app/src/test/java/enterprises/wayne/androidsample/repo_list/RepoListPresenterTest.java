@@ -2,13 +2,17 @@ package enterprises.wayne.androidsample.repo_list;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,12 +35,10 @@ import static org.mockito.Mockito.*;
 @RunWith(JUnit4.class)
 public class RepoListPresenterTest
 {
-
-    @Mock
-    private RepoListContract.View view;
-    @Mock
-    private GitHubAPIService gitHubAPIService;
-    private RepoListPresenter presenter;
+    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Mock    public RepoListContract.View view;
+    @Mock    public GitHubAPIService gitHubAPIService;
+    @InjectMocks public RepoListPresenter presenter;
 
     @Before
     public void setUp() throws Exception
@@ -51,10 +53,7 @@ public class RepoListPresenterTest
             }
         });
 
-        // create the presenter
-        presenter = new RepoListPresenter();
         presenter.subscribe(view);
-        presenter.setGithubService(gitHubAPIService);
     }
 
     @After

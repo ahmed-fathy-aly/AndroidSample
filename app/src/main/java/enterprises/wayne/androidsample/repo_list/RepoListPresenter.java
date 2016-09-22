@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import enterprises.wayne.androidsample.data.GitHubAPIService;
 import enterprises.wayne.androidsample.entity.Repo;
 import rx.Observable;
@@ -18,14 +20,13 @@ import timber.log.Timber;
 public class RepoListPresenter implements RepoListContract.Presenter
 {
     private RepoListContract.View mView;
-    private GitHubAPIService mGitHubAPIService;
-    private Observable mGitHubObservable;
+    public GitHubAPIService mGitHubAPIService;
 
-    public RepoListPresenter()
+    @Inject
+    public RepoListPresenter(GitHubAPIService gitHubAPIService)
     {
-        setGithubService(new GitHubAPIService());
+        mGitHubAPIService = gitHubAPIService;
     }
-
 
     /**
      * made public for testing only
