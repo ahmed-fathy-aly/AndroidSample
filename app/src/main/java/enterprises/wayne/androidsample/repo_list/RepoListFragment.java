@@ -99,6 +99,11 @@ public class RepoListFragment extends Fragment implements RepoListContract.View
                     @Override
                     public void onNext(TextViewTextChangeEvent textViewTextChangeEvent)
                     {
+                        // ignore the first event
+                        if (textViewTextChangeEvent.before() == 0
+                                &&textViewTextChangeEvent.text().length() == 0)
+                            return;
+
                         mPresenter.getRepos(textViewTextChangeEvent.text().toString());
                     }
                 });
