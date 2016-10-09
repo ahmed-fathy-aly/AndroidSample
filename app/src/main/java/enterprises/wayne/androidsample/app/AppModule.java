@@ -3,6 +3,8 @@ package enterprises.wayne.androidsample.app;
 import dagger.Module;
 import dagger.Provides;
 import enterprises.wayne.androidsample.data.GitHubAPIService;
+import enterprises.wayne.androidsample.repo_list.GetReposUseCase;
+import enterprises.wayne.androidsample.repo_list.GetReposUseCaseImp;
 import enterprises.wayne.androidsample.repo_list.RepoListPresenter;
 
 /**
@@ -18,9 +20,13 @@ public class AppModule
     }
 
     @Provides
-    public RepoListPresenter provideRepoListPresenter(GitHubAPIService gitHubAPIService)
+    public GetReposUseCase provideGetRepoUseCase(GitHubAPIService gitHubAPIService)
     {
-        return new RepoListPresenter(gitHubAPIService);
+        return new GetReposUseCaseImp(gitHubAPIService);
     }
-
+    @Provides
+    public RepoListPresenter provideRepoListPresenter(GetReposUseCaseImp getReposUseCase)
+    {
+        return new RepoListPresenter(getReposUseCase);
+    }
 }
